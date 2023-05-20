@@ -3,7 +3,7 @@ interface IRecado {
 	title: string;
 	text: string;
 	status: boolean;
-	id_user: string;
+	user_id: string;
 	create_date: string;
 	update_date: string;
 }

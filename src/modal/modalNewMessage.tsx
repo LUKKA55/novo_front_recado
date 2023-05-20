@@ -3,19 +3,14 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { style } from '../styled/styledModal';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import validationMessage from '../validations/validationMessage';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/store';
 import { postMessage } from '../store/feature/messagesSlice';
-import { useEffect, useState } from 'react';
-
-const defaultInputValues = {
-	title: '',
-	text: '',
-};
+import { useMediaQuery } from '@mui/material';
+import { useState } from 'react';
 
 const ModalNewMessage = ({
 	open,
@@ -26,6 +21,9 @@ const ModalNewMessage = ({
 }) => {
 	const dispatch: AppDispatch = useDispatch();
 	const { user_id } = useSelector((state: RootState) => state.userSlice);
+	const [resetTitle, setResetTitle] = useState('');
+	const [resetText, setResetText] = useState('');
+	const isActive = useMediaQuery('(min-width:900px)');
 
 	const {
 		register,
@@ -34,23 +32,30 @@ const ModalNewMessage = ({
 	} = useForm({
 		resolver: yupResolver(validationMessage),
 	});
-	const [values, setValues] = useState(defaultInputValues);
-
-	useEffect(() => {
-		if (open) setValues(defaultInputValues);
-	}, [open]);
 
 	const save = (data: any) => {
-		dispatch(postMessage({ data, user_id }));
-	};
-	const handleChange = (value: any) => {
-		console.log(value);
-		setValues(value);
+		if (resetTitle !== '' && resetText !== '') {
+			dispatch(postMessage({ data, user_id }));
+			setResetTitle('');
+			setResetText('');
+		}
 	};
 
 	return (
 		<Modal open={open} onClose={onClose}>
-			<Box sx={style}>
+			<Box
+				sx={{
+					position: 'absolute' as 'absolute',
+					top: '50%',
+					left: '50%',
+					transform: 'translate(-50%, -50%)',
+					width: isActive ? '400px' : '80%',
+					bgcolor: 'background.paper',
+					border: '2px solid #6bacd4',
+					boxShadow: 24,
+					p: 4,
+				}}
+			>
 				<Typography
 					id="modal-modal-title"
 					variant="h6"
@@ -59,6 +64,7 @@ const ModalNewMessage = ({
 				>
 					New Message
 				</Typography>
+
 				<TextField
 					sx={{ width: '100%' }}
 					margin="normal"
@@ -70,9 +76,10 @@ const ModalNewMessage = ({
 					helperText={String(
 						errors.title?.message ? errors.title?.message : ''
 					)}
-					value={values.title}
-					onChange={(e) => handleChange({ ...values, title: e.target.value })}
+					value={resetTitle}
+					onChange={(e) => setResetTitle(e.target.value)}
 				/>
+
 				<TextField
 					sx={{ width: '100%' }}
 					margin="normal"
@@ -82,9 +89,10 @@ const ModalNewMessage = ({
 					{...register('text')}
 					error={errors.text ? true : false}
 					helperText={String(errors.text?.message ? errors.text?.message : '')}
-					value={values.text}
-					onChange={(e) => handleChange({ ...values, text: e.target.value })}
+					value={resetText}
+					onChange={(e) => setResetText(e.target.value)}
 				/>
+
 				<Button
 					variant="outlined"
 					sx={{ width: '10%', marginLeft: '40%' }}

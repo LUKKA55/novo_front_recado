@@ -91,7 +91,7 @@ const FormLogin = () => {
 						color="initial"
 						sx={{ marginBottom: '5%', color: '#6bacd4' }}
 					>
-						Wordwave
+						WordWave
 					</Typography>
 					<TextField
 						sx={{ width: '80%' }}

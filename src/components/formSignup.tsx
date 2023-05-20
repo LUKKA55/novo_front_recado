@@ -87,7 +87,7 @@ const FormSignup = () => {
 						color="initial"
 						sx={{ marginBottom: '5%', marginTop: '5%', color: '#6bacd4' }}
 					>
-						Wordwave
+						WordWave
 					</Typography>
 
 					<TextField

@@ -39,7 +39,7 @@ class Api {
 			}
 		}
 	}
-	async doPut(url: string, body: object) {
+	async doPut(url: string, body?: object) {
 		try {
 			const response = await this.setBaseUrl().put(url, body);
 			if (response.status === 200) {

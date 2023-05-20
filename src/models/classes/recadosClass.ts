@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
 import IRecado from '../interfaces/recadoInterface';
+import newDate from '../../services/newDate';
 
 class Recado implements IRecado {
 	public id: string;
@@ -10,14 +11,14 @@ class Recado implements IRecado {
 	constructor(
 		public title: string,
 		public text: string,
-		public id_user: string
+		public user_id: string
 	) {
 		this.title = title;
 		this.text = text;
-		this.id_user = id_user;
+		this.user_id = user_id;
 		this.status = true;
-		this.update_date = new Date().toISOString();
-		this.create_date = new Date().toISOString();
+		this.update_date = newDate();
+		this.create_date = newDate();
 		this.id = v4();
 	}
 }

@@ -23,12 +23,14 @@ export const loginUser = createAsyncThunk(
 
 const initialState: {
 	user_id: string;
+	user_name: string;
 	userOnline: boolean;
 	message: string;
 } = {
 	user_id: '',
 	userOnline: false,
 	message: '',
+	user_name: '',
 };
 
 const userSlice = createSlice({
@@ -56,6 +58,7 @@ const userSlice = createSlice({
 				state.message = action.payload.message;
 				console.log('mensagem', state.message);
 				state.user_id = action.payload.data?.id;
+				state.user_name = action.payload.data?.name;
 			}
 		);
 	},

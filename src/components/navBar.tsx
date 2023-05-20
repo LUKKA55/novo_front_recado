@@ -5,16 +5,24 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { AppDispatch } from '../store/store';
-import { useDispatch } from 'react-redux';
+import { AppDispatch, RootState } from '../store/store';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUserOnline } from '../store/feature/userSlice';
-import { useState } from 'react';
-import ModalNewMessage from '../components/modalNewMessage';
+import { useEffect, useState } from 'react';
+import { getSearch } from '../store/feature/messagesSlice';
+import { useMediaQuery } from '@mui/material';
 
 const NavBar = () => {
-	const [open, setOpen] = useState(false);
 	const [search, setSearch] = useState('');
 	const dispatch: AppDispatch = useDispatch();
+	const { user_name, user_id } = useSelector(
+		(state: RootState) => state.userSlice
+	);
+	const isActive = useMediaQuery('(min-width:900px)');
+
+	useEffect(() => {
+		dispatch(getSearch({ user_id: user_id, data: search }));
+	}, [search]);
 
 	return (
 		<>
@@ -28,42 +36,36 @@ const NavBar = () => {
 						sx={{
 							display: 'flex',
 							justifyContent: 'flex-start',
-							width: '50%',
+							width: '40%',
 						}}
 					>
-						<Avatar
-							alt="Wave"
-							src="https://prints.ultracoloringpages.com/815c3491fc3bcbcdd24f343c38e40aad.png"
-							sx={{
-								width: '15%',
-								height: '15%',
-								marginRight: '2%',
-								marginLeft: '3%',
-							}}
-						/>
+						{isActive && (
+							<Avatar
+								alt="Wave"
+								src="https://prints.ultracoloringpages.com/815c3491fc3bcbcdd24f343c38e40aad.png"
+								sx={{
+									width: '15%',
+									height: '15%',
+									marginRight: '2%',
+									marginLeft: '3%',
+								}}
+							/>
+						)}
 						<Typography
 							variant="h5"
 							component="a"
 							sx={{
 								fontFamily: 'monospace',
 								marginTop: '5%',
-
 								fontSize: '700',
 							}}
 						>
-							Wordwave
+							Hi {user_name.split(' ')[0]}
 						</Typography>
 					</Box>
-					<Button
-						variant="contained"
-						color="success"
-						sx={{ marginRight: '10%' }}
-						onClick={() => setOpen(true)}
-					>
-						Publish
-					</Button>
+
 					<TextField
-						sx={{ marginRight: '20%' }}
+						sx={{ marginRight: '10%', width: '30%' }}
 						id="search"
 						type="search"
 						label="Search..."
@@ -79,12 +81,6 @@ const NavBar = () => {
 					</Button>
 				</Toolbar>
 			</AppBar>
-			<ModalNewMessage
-				open={open}
-				onClose={() => {
-					setOpen(false);
-				}}
-			/>
 		</>
 	);
 };
