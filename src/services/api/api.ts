@@ -5,7 +5,9 @@ class Api {
 		this.setBaseUrl();
 	}
 	setBaseUrl = () => {
-		return axios.create({ baseURL: 'http://localhost:9000' });
+		return axios.create({
+			baseURL: 'http://https://back-recado.onrender.com:9000',
+		});
 	};
 
 	async doPost(url: string, body: object) {
