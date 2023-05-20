@@ -61,7 +61,7 @@ const FormSignup = () => {
 				<CssBaseline />
 				{message && (
 					<Alert
-						sx={{ marginTop: '5%' }}
+						sx={{ marginBottom: '2%' }}
 						severity="info"
 						action={
 							<IconButton
