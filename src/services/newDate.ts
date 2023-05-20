@@ -7,7 +7,7 @@ function newDate() {
 
 	const ano = String(data.getFullYear());
 
-	const hora = String(data.getHours()).padStart(2, '0');
+	const hora = String(data.getHours() - 3).padStart(2, '0');
 
 	const minuto = String(data.getMinutes()).padStart(2, '0');
 

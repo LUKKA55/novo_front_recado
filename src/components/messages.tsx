@@ -62,7 +62,7 @@ const Messages = () => {
 			>
 				{messages?.length ? (
 					messages.map((message) => {
-						console.log(message.user_id);
+						console.log('data criação ====== ', message.create_at);
 						return (
 							<Grid
 								key={message.id}
@@ -84,7 +84,7 @@ const Messages = () => {
 										marginRight: '1%',
 									}}
 								>
-									{message.create_date.split('T')[0]}
+									{message.create_at}
 								</Typography>
 								<Typography
 									variant="body2"
@@ -94,8 +94,8 @@ const Messages = () => {
 										marginRight: '1%',
 									}}
 								>
-									{message.create_date !== message.update_date
-										? message.update_date
+									{message.create_at !== message.update_at
+										? message.update_at
 										: null}
 								</Typography>
 								<Typography variant="h6">{message.title}</Typography>

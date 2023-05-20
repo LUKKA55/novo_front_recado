@@ -86,7 +86,7 @@ const ModalArchived = ({ open, onClose }: { open: boolean; onClose: any }) => {
 											marginRight: '1%',
 										}}
 									>
-										{message.create_date.split('T')[0]}
+										{message.create_at}
 									</Typography>
 									<Typography
 										variant="body2"
@@ -96,9 +96,8 @@ const ModalArchived = ({ open, onClose }: { open: boolean; onClose: any }) => {
 											marginRight: '1%',
 										}}
 									>
-										{message.create_date.split('T')[0] !==
-										message.update_date.split('T')[0]
-											? message.update_date.split('T')[0]
+										{message.create_at !== message.update_at
+											? message.update_at
 											: null}
 									</Typography>
 									<Typography variant="h6">{message.title}</Typography>

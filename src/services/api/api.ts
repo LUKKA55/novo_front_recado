@@ -6,7 +6,7 @@ class Api {
 	}
 	setBaseUrl = () => {
 		return axios.create({
-			baseURL: 'https://back-recado.onrender.com/',
+			baseURL: 'https://back-recado.onrender.com',
 		});
 	};
 

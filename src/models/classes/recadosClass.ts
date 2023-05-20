@@ -5,8 +5,8 @@ import newDate from '../../services/newDate';
 class Recado implements IRecado {
 	public id: string;
 	public status: boolean;
-	public create_date: string;
-	public update_date: string;
+	public create_at: string;
+	public update_at: string;
 
 	constructor(
 		public title: string,
@@ -17,8 +17,8 @@ class Recado implements IRecado {
 		this.text = text;
 		this.user_id = user_id;
 		this.status = true;
-		this.update_date = newDate();
-		this.create_date = newDate();
+		this.update_at = newDate();
+		this.create_at = newDate();
 		this.id = v4();
 	}
 }
