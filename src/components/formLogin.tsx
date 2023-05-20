@@ -47,7 +47,16 @@ const FormLogin = () => {
 
 	return (
 		<>
-			<Container component="main" maxWidth="xs">
+			<Container
+				component="main"
+				maxWidth="xs"
+				sx={{
+					position: 'absolute',
+					top: '50%',
+					left: '50%',
+					transform: 'translate(-50%, -50%)',
+				}}
+			>
 				<CssBaseline />
 				{message && (
 					<Alert
@@ -77,7 +86,6 @@ const FormLogin = () => {
 						flexDirection: 'column',
 						border: '2px solid 	#6bacd4',
 						borderRadius: '20px',
-						marginTop: '5%',
 					}}
 				>
 					<Avatar
