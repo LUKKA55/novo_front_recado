@@ -41,7 +41,6 @@ const FormLogin = () => {
 	}, [message]);
 
 	const login = (data: any) => {
-		console.log(data);
 		dispatch(loginUser(data));
 	};
 

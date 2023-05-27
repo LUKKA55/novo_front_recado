@@ -42,7 +42,6 @@ const FormSignup = () => {
 	}, [message]);
 
 	const signup = (data: any): any => {
-		console.log(data);
 		dispatch(postUser(data));
 	};
 

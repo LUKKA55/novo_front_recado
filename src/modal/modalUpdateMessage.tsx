@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/store';
 import { putMessage } from '../store/feature/messagesSlice';
 import { useState } from 'react';
-import IRecado from '../models/interfaces/recadoInterface';
+import IRecado from '../interfaces/recadoInterface';
 import { useMediaQuery } from '@mui/material';
 
 const ModalUpdateMessage = ({
@@ -27,9 +27,6 @@ const ModalUpdateMessage = ({
 
 	const save = ({ title, text }: { title: string; text: string }) => {
 		if (messageTitle !== '' || messageText !== '') {
-			console.log('data', data);
-			console.log('title text mensagem antes....', title, text);
-			console.log('ID message antes ....', data.id);
 			dispatch(
 				putMessage({
 					message_id: data.id,
@@ -38,7 +35,6 @@ const ModalUpdateMessage = ({
 				})
 			);
 		}
-		console.log('data', data);
 		setMessageTitle('');
 		setMessageText('');
 	};

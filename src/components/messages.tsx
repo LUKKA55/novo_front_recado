@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/store';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
-import IRecado from '../models/interfaces/recadoInterface';
+import IRecado from '../interfaces/recadoInterface';
 import Grid from '@mui/material/Grid';
 import {
 	deleteMessage,
@@ -44,7 +44,6 @@ const Messages = () => {
 
 	useEffect(() => {
 		setMessages(all_messages_true);
-		console.log('messages', messages);
 	}, [all_messages_true]);
 
 	return (
@@ -62,7 +61,6 @@ const Messages = () => {
 			>
 				{messages?.length ? (
 					messages.map((message) => {
-						console.log('data criação ====== ', message.create_at);
 						return (
 							<Grid
 								key={message.id}

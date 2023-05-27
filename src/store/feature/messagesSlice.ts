@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import IRecado from '../../models/interfaces/recadoInterface';
+import IRecado from '../../interfaces/recadoInterface';
 import apiService from '../../services/api/api';
 
 export const getMessages = createAsyncThunk(
@@ -142,7 +142,6 @@ const messagesSlice = createSlice({
 			getMessagesFalse.fulfilled,
 			(state, action: PayloadAction<{ data: Array<IRecado> }>) => {
 				state.all_messages_false = action.payload.data;
-				console.log('----------------', state.all_messages_false);
 			}
 		);
 	},

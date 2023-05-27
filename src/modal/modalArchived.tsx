@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { IconButton, useMediaQuery } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import IRecado from '../models/interfaces/recadoInterface';
+import IRecado from '../interfaces/recadoInterface';
 import UnarchiveIcon from '@mui/icons-material/Unarchive';
 
 const ModalArchived = ({ open, onClose }: { open: boolean; onClose: any }) => {
@@ -31,10 +31,8 @@ const ModalArchived = ({ open, onClose }: { open: boolean; onClose: any }) => {
 
 	useEffect(() => {
 		setMessages(all_messages_false);
-		console.log('messages', messages);
 	}, [all_messages_false]);
 
-	console.log('false', all_messages_false);
 	return (
 		<Modal open={open} onClose={onClose}>
 			<Box
@@ -64,7 +62,6 @@ const ModalArchived = ({ open, onClose }: { open: boolean; onClose: any }) => {
 				>
 					{messages?.length ? (
 						messages.map((message) => {
-							console.log(message.user_id);
 							return (
 								<Grid
 									key={message.id}

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import apiService from '../../services/api/api';
-import IUser from '../../models/interfaces/userInterface';
+import IUser from '../../interfaces/userInterface';
 
 export const postUser = createAsyncThunk(
 	'user/post',
@@ -49,14 +49,12 @@ const userSlice = createSlice({
 			postUser.fulfilled,
 			(state, action: PayloadAction<{ message: string }>) => {
 				state.message = action.payload.message;
-				console.log('mensagem', state.message);
 			}
 		);
 		addCase(
 			loginUser.fulfilled,
 			(state, action: PayloadAction<{ data: IUser; message: string }>) => {
 				state.message = action.payload.message;
-				console.log('mensagem', state.message);
 				state.user_id = action.payload.data?.id;
 				state.user_name = action.payload.data?.name;
 			}
