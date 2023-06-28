@@ -14,9 +14,6 @@ export const loginUser = createAsyncThunk(
 	'user/login',
 	async (data: object, { dispatch, getState }) => {
 		const response = await apiService.doPost('/users/login', data);
-		if (response.message === 'Login feito com SUCESSO.') {
-			dispatch(setUserOnline(true));
-		}
 		return response;
 	}
 );
@@ -24,11 +21,11 @@ export const loginUser = createAsyncThunk(
 const initialState: {
 	user_id: string;
 	user_name: string;
-	userOnline: boolean;
+	userOnline: string;
 	message: string;
 } = {
 	user_id: '',
-	userOnline: false,
+	userOnline: '',
 	message: '',
 	user_name: '',
 };
@@ -37,7 +34,7 @@ const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
-		setUserOnline: (state, action: PayloadAction<boolean>) => {
+		setUserOnline: (state, action: PayloadAction<string>) => {
 			state.userOnline = action.payload;
 		},
 		setMessage: (state, action: PayloadAction<string>) => {
@@ -57,6 +54,7 @@ const userSlice = createSlice({
 				state.message = action.payload.message;
 				state.user_id = action.payload.data?.id;
 				state.user_name = action.payload.data?.name;
+				state.userOnline = action.payload.data?.token as string;
 			}
 		);
 	},

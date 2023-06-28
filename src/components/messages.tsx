@@ -23,7 +23,9 @@ import { useMediaQuery } from '@mui/material';
 const Messages = () => {
 	const dispatch: AppDispatch = useDispatch();
 
-	const { user_id } = useSelector((state: RootState) => state.userSlice);
+	const { user_id, userOnline } = useSelector(
+		(state: RootState) => state.userSlice
+	);
 
 	const { all_messages_true } = useSelector(
 		(state: RootState) => state.messagesSlice
@@ -39,7 +41,7 @@ const Messages = () => {
 	const isActive = useMediaQuery('(min-width:900px)');
 
 	useEffect(() => {
-		dispatch(getMessages(user_id));
+		dispatch(getMessages(userOnline));
 	}, []);
 
 	useEffect(() => {
@@ -120,7 +122,7 @@ const Messages = () => {
 										dispatch(
 											deleteMessage({
 												message_id: message.id,
-												user_id: message.user_id,
+												token: userOnline,
 											})
 										)
 									}
@@ -137,7 +139,7 @@ const Messages = () => {
 										dispatch(
 											putArquived({
 												message_id: message.id,
-												user_id: message.user_id,
+												token: userOnline,
 											})
 										)
 									}

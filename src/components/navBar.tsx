@@ -15,13 +15,13 @@ import { useMediaQuery } from '@mui/material';
 const NavBar = () => {
 	const [search, setSearch] = useState('');
 	const dispatch: AppDispatch = useDispatch();
-	const { user_name, user_id } = useSelector(
+	const { user_name, userOnline } = useSelector(
 		(state: RootState) => state.userSlice
 	);
 	const isActive = useMediaQuery('(min-width:900px)');
 
 	useEffect(() => {
-		dispatch(getSearch({ user_id: user_id, data: search }));
+		dispatch(getSearch({ token: userOnline, data: search }));
 	}, [search]);
 
 	return (
@@ -75,7 +75,7 @@ const NavBar = () => {
 						variant="contained"
 						color="error"
 						sx={{ marginRight: '3%' }}
-						onClick={() => dispatch(setUserOnline(false))}
+						onClick={() => dispatch(setUserOnline(''))}
 					>
 						Logout
 					</Button>

@@ -20,13 +20,13 @@ const ModalArchived = ({ open, onClose }: { open: boolean; onClose: any }) => {
 	const { all_messages_false } = useSelector(
 		(state: RootState) => state.messagesSlice
 	);
-	const { user_id } = useSelector((state: RootState) => state.userSlice);
+	const { userOnline } = useSelector((state: RootState) => state.userSlice);
 	const [messages, setMessages] = useState<IRecado[] | null>(null);
 
 	const isActive = useMediaQuery('(min-width:900px)');
 
 	useEffect(() => {
-		dispatch(getMessagesFalse(user_id));
+		dispatch(getMessagesFalse(userOnline));
 	}, []);
 
 	useEffect(() => {
@@ -107,7 +107,7 @@ const ModalArchived = ({ open, onClose }: { open: boolean; onClose: any }) => {
 											dispatch(
 												deleteMessage({
 													message_id: message.id,
-													user_id: message.user_id,
+													token: userOnline,
 												})
 											)
 										}
@@ -121,7 +121,7 @@ const ModalArchived = ({ open, onClose }: { open: boolean; onClose: any }) => {
 											dispatch(
 												putUnarchive({
 													message_id: message.id,
-													user_id: message.user_id,
+													token: userOnline,
 												})
 											)
 										}

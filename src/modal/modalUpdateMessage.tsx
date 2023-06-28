@@ -20,7 +20,7 @@ const ModalUpdateMessage = ({
 	data: IRecado;
 }) => {
 	const dispatch: AppDispatch = useDispatch();
-	const { user_id } = useSelector((state: RootState) => state.userSlice);
+	const { userOnline } = useSelector((state: RootState) => state.userSlice);
 	const [messageTitle, setMessageTitle] = useState<string>();
 	const [messageText, setMessageText] = useState<string>();
 	const isActive = useMediaQuery('(min-width:900px)');
@@ -31,7 +31,7 @@ const ModalUpdateMessage = ({
 				putMessage({
 					message_id: data.id,
 					data: { title, text },
-					user_id: user_id,
+					token: userOnline,
 				})
 			);
 		}

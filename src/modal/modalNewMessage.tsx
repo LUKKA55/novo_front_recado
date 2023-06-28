@@ -20,7 +20,7 @@ const ModalNewMessage = ({
 	onClose: any;
 }) => {
 	const dispatch: AppDispatch = useDispatch();
-	const { user_id } = useSelector((state: RootState) => state.userSlice);
+	const { userOnline } = useSelector((state: RootState) => state.userSlice);
 	const [resetTitle, setResetTitle] = useState('');
 	const [resetText, setResetText] = useState('');
 	const isActive = useMediaQuery('(min-width:900px)');
@@ -35,7 +35,7 @@ const ModalNewMessage = ({
 
 	const save = (data: any) => {
 		if (resetTitle !== '' && resetText !== '') {
-			dispatch(postMessage({ data, user_id }));
+			dispatch(postMessage({ data, token: userOnline }));
 			setResetTitle('');
 			setResetText('');
 		}

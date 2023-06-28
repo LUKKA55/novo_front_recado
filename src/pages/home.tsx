@@ -9,7 +9,7 @@ const Home = () => {
 	const navigate = useNavigate();
 	const { userOnline } = useSelector((state: RootState) => state.userSlice);
 	useEffect(() => {
-		if (userOnline !== true) {
+		if (userOnline === '') {
 			navigate('/');
 		}
 	}, [userOnline]);

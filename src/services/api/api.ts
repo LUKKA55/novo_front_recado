@@ -10,9 +10,9 @@ class Api {
 		});
 	};
 
-	async doPost(url: string, body: object) {
+	async doPost(url: string, body: object, token?: any) {
 		try {
-			const response = await this.setBaseUrl().post(url, body);
+			const response = await this.setBaseUrl().post(url, body, token);
 			if (response.status === 200) {
 				return response.data;
 			}
@@ -24,9 +24,9 @@ class Api {
 		}
 	}
 
-	async doGet(url: string) {
+	async doGet(url: string, token?: any) {
 		try {
-			const response = await this.setBaseUrl().get(url);
+			const response = await this.setBaseUrl().get(url, token);
 			if (response.status === 200) {
 				return response.data;
 			}
@@ -37,9 +37,9 @@ class Api {
 			}
 		}
 	}
-	async doPut(url: string, body?: object) {
+	async doPut(url: string, body?: object, token?: any) {
 		try {
-			const response = await this.setBaseUrl().put(url, body);
+			const response = await this.setBaseUrl().put(url, body, token);
 			if (response.status === 200) {
 				return response.data;
 			}
@@ -50,9 +50,9 @@ class Api {
 			}
 		}
 	}
-	async doDelete(url: string) {
+	async doDelete(url: string, token?: any) {
 		try {
-			const response = await this.setBaseUrl().delete(url);
+			const response = await this.setBaseUrl().delete(url, token);
 			if (response.status === 200) {
 				return response.data;
 			}

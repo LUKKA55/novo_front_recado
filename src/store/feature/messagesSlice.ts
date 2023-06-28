@@ -4,8 +4,11 @@ import apiService from '../../services/api/api';
 
 export const getMessages = createAsyncThunk(
 	'message/get',
-	async (user_id: string, { dispatch, getState }) => {
-		const response = await apiService.doGet(`/recados/true/${user_id}`);
+	async (token: string, { dispatch, getState }) => {
+		const response = await apiService.doGet(`/recados/true`, {
+			headers: { authorization: token },
+		});
+
 		return response;
 	}
 );
@@ -13,11 +16,13 @@ export const getMessages = createAsyncThunk(
 export const postMessage = createAsyncThunk(
 	'message/post',
 	async (
-		{ data, user_id }: { data: object; user_id: string },
+		{ data, token }: { data: object; token: string },
 		{ dispatch, getState }
 	) => {
-		const response = await apiService.doPost(`/recados/${user_id}`, data);
-		dispatch(getMessages(user_id));
+		const response = await apiService.doPost(`/recados`, data, {
+			headers: { authorization: token },
+		});
+		dispatch(getMessages(token));
 		return response;
 	}
 );
@@ -25,12 +30,14 @@ export const postMessage = createAsyncThunk(
 export const deleteMessage = createAsyncThunk(
 	'message/delete',
 	async (
-		{ message_id, user_id }: { message_id: string; user_id: string },
+		{ message_id, token }: { message_id: string; token: string },
 		{ dispatch, getState }
 	) => {
-		const response = await apiService.doDelete(`/recados/${message_id}`);
-		dispatch(getMessages(user_id));
-		dispatch(getMessagesFalse(user_id));
+		const response = await apiService.doDelete(`/recados/${message_id}`, {
+			headers: { authorization: token },
+		});
+		dispatch(getMessages(token));
+		dispatch(getMessagesFalse(token));
 
 		return response;
 	}
@@ -42,12 +49,14 @@ export const putMessage = createAsyncThunk(
 		{
 			message_id,
 			data,
-			user_id,
-		}: { message_id: string; data: object; user_id: string },
+			token,
+		}: { message_id: string; data: object; token: string },
 		{ dispatch, getState }
 	) => {
-		const response = await apiService.doPut(`/recados/${message_id}`, data);
-		dispatch(getMessages(user_id));
+		const response = await apiService.doPut(`/recados/${message_id}`, data, {
+			headers: { authorization: token },
+		});
+		dispatch(getMessages(token));
 		return response;
 	}
 );
@@ -55,12 +64,18 @@ export const putMessage = createAsyncThunk(
 export const putArquived = createAsyncThunk(
 	'message/arquived',
 	async (
-		{ message_id, user_id }: { message_id: string; user_id: string },
+		{ message_id, token }: { message_id: string; token: string },
 		{ dispatch, getState }
 	) => {
-		const response = await apiService.doPut(`/recados/arquivar/${message_id}`);
-		dispatch(getMessages(user_id));
-		dispatch(getMessagesFalse(user_id));
+		const response = await apiService.doPut(
+			`/recados/arquivar/${message_id}`,
+			undefined,
+			{
+				headers: { authorization: token },
+			}
+		);
+		dispatch(getMessages(token));
+		dispatch(getMessagesFalse(token));
 		return response;
 	}
 );
@@ -68,11 +83,14 @@ export const putArquived = createAsyncThunk(
 export const getSearch = createAsyncThunk(
 	'message/search',
 	async (
-		{ user_id, data }: { user_id: string; data: string },
+		{ token, data }: { token: string; data: string },
 		{ dispatch, getState }
 	) => {
 		const response = await apiService.doGet(
-			`/recados/filter/true/${user_id}/?title=${data}`
+			`/recados/filter/true/?title=${data}`,
+			{
+				headers: { authorization: token },
+			}
 		);
 		return response;
 	}
@@ -80,8 +98,11 @@ export const getSearch = createAsyncThunk(
 
 export const getMessagesFalse = createAsyncThunk(
 	'messageFalse/get',
-	async (user_id: string, { dispatch, getState }) => {
-		const response = await apiService.doGet(`/recados/false/${user_id}`);
+	async (token: string, { dispatch, getState }) => {
+		const response = await apiService.doGet(`/recados/false`, {
+			headers: { authorization: token },
+		});
+
 		return response;
 	}
 );
@@ -89,14 +110,18 @@ export const getMessagesFalse = createAsyncThunk(
 export const putUnarchive = createAsyncThunk(
 	'message/Unarchive',
 	async (
-		{ message_id, user_id }: { message_id: string; user_id: string },
+		{ message_id, token }: { message_id: string; token: string },
 		{ dispatch, getState }
 	) => {
 		const response = await apiService.doPut(
-			`/recados/desarquivar/${message_id}`
+			`/recados/desarquivar/${message_id}`,
+			undefined,
+			{
+				headers: { authorization: token },
+			}
 		);
-		dispatch(getMessages(user_id));
-		dispatch(getMessagesFalse(user_id));
+		dispatch(getMessages(token));
+		dispatch(getMessagesFalse(token));
 		return response;
 	}
 );
@@ -122,25 +147,44 @@ const messagesSlice = createSlice({
 	extraReducers: ({ addCase }) => {
 		addCase(
 			getMessages.fulfilled,
-			(state, action: PayloadAction<{ data: Array<IRecado> }>) => {
+			(
+				state,
+				action: PayloadAction<{ data: Array<IRecado>; message: string }>
+			) => {
+				state.message = action.payload.message;
 				state.all_messages_true = action.payload.data;
 			}
 		);
 		addCase(
 			putMessage.fulfilled,
-			(state, action: PayloadAction<{ data: Array<IRecado> }>) => {
+			(
+				state,
+				action: PayloadAction<{ data: Array<IRecado>; message: string }>
+			) => {
+				state.message = action.payload.message;
+
 				state.all_messages_true = action.payload.data;
 			}
 		);
 		addCase(
 			getSearch.fulfilled,
-			(state, action: PayloadAction<{ data: Array<IRecado> }>) => {
+			(
+				state,
+				action: PayloadAction<{ data: Array<IRecado>; message: string }>
+			) => {
+				state.message = action.payload.message;
+
 				state.all_messages_true = action.payload.data;
 			}
 		);
 		addCase(
 			getMessagesFalse.fulfilled,
-			(state, action: PayloadAction<{ data: Array<IRecado> }>) => {
+			(
+				state,
+				action: PayloadAction<{ data: Array<IRecado>; message: string }>
+			) => {
+				state.message = action.payload.message;
+
 				state.all_messages_false = action.payload.data;
 			}
 		);
